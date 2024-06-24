@@ -1,4 +1,4 @@
-connection: "looker-private-demo"
+connection: "cat_bq_connection"
 label: " eCommerce"
 include: "/queries/queries*.view" # includes all queries refinements
 include: "/views/**/*.view" # include all the views
@@ -7,7 +7,7 @@ include: "/dashboards/*.dashboard.lookml" # include all the views
 ############ Model Configuration #############
 
 datagroup: ecommerce_etl {
-  sql_trigger: SELECT max(created_at) FROM ecomm.events ;;
+  sql_trigger: SELECT max(created_at) FROM looker-private-demo.ecomm.events ;;
   max_cache_age: "24 hours"
 }
 
@@ -63,6 +63,7 @@ explore: order_items {
 
   join: discounts {
     view_label: "Discounts"
+    relationship: one_to_one
     type: inner
     sql_on: ${products.id} = ${discounts.product_id} ;;
   }
